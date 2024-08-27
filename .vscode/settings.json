@@ -1,0 +1,23 @@
+{
+  "editor.rulers": [
+    {
+      "column": 80,
+      "color": "#060"
+    },
+    {
+      "column": 84,
+      "color": "#744"
+    }
+  ],
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "[typescript]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "cSpell.words": [
+    "Deque"
+  ],
+}
