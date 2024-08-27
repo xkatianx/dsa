@@ -1,6 +1,6 @@
 import { maxProbability } from "./1514";
 
-describe("MinStack", () => {
+describe("LeetCode 1514", () => {
   it("should pass test case #1", () => {
     const res = maxProbability(
       3,

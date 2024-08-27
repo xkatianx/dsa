@@ -30,7 +30,8 @@ export function maxProbability(
   /** Bellman-Ford: O(mn) time, linear space */
   // const distances = bellmanFord(graph, start_node);
 
-  /** Dijkstra without Fibonacci Heap: O(m log n) time, O(n^2) space */
+  /** Dijkstra + Fibonacci Heap: O(m + n log n) time, O(n) space */
+  /** Dijkstra here: O(m log n) time, O(n^2) space */
   const distances = dijkstra(graph, start_node);
 
   const distance = distances[end_node] ?? Infinity;
