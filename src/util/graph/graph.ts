@@ -8,6 +8,7 @@ export type Node<NodeData> = {
 export type Edge<NodeData, EdgeData> = {
   from: Node<NodeData>;
   to: Node<NodeData>;
+  weight: number;
   data: EdgeData;
 };
 
@@ -39,12 +40,17 @@ export class Graph<NodeData, EdgeData> {
     }
   }
 
-  addEdge(from: Node<NodeData>, to: Node<NodeData>, data: EdgeData) {
+  addEdge(
+    from: Node<NodeData>,
+    to: Node<NodeData>,
+    data: EdgeData,
+    weight = 1
+  ) {
     this.addNode(from);
     this.addNode(to);
     this._size++;
     this.linkedList[from.index] ??= [];
-    this.linkedList[from.index].push({ from, to, data });
+    this.linkedList[from.index].push({ from, to, data, weight });
   }
 
   getNode(index: number) {
@@ -56,5 +62,12 @@ export class Graph<NodeData, EdgeData> {
 
   edgesOf(node: Node<NodeData>) {
     return this.linkedList.at(node.index);
+  }
+
+  *iterNodes() {
+    for (const node of this.nodes) {
+      if (node == null) continue;
+      yield node;
+    }
   }
 }

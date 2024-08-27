@@ -1,20 +1,25 @@
-import { Graph, type Edge, type Node } from "../graph/graph";
+import { Graph, type Node } from "../graph/graph";
 import { MinHeap } from "../list/minHeap";
 
 export function dijkstra<NodeData, EdgeData>(
   graph: Graph<NodeData, EdgeData>,
-  start: number,
-  compareDistance: (a: Node<NodeData>, b: Node<NodeData>) => number,
-  updateDistance: (edge: Edge<NodeData, EdgeData>) => boolean
+  start: number
 ) {
-  const heap = new MinHeap<Node<NodeData>>(compareDistance);
+  const distances: number[] = [];
+  distances[start] = 0;
   const seen: boolean[] = [];
+  const heap = new MinHeap<Node<NodeData>>(
+    (a, b) => distances[a.index] - distances[b.index]
+  );
   for (let node = graph.getNode(start); node != null; node = heap.pop()) {
-    if (seen[node.index]) return;
+    if (seen[node.index]) continue;
     seen[node.index] = true;
     graph.edgesOf(node)?.forEach((edge) => {
-      if (updateDistance(edge)) heap.push(edge.to);
+      const newDistance = distances[node.index] + edge.weight;
+      if ((distances[edge.to.index] ?? Infinity) < newDistance) return;
+      distances[edge.to.index] = newDistance;
+      heap.push(edge.to);
     });
   }
-  return graph;
+  return distances;
 }
