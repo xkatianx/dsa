@@ -25,7 +25,7 @@ function mom(arr: number[]): number {
   return bfprt(medians, medians.length >> 1);
 }
 
-function partition(arr: number[], pivot: number) {
+export function partition(arr: number[], pivot: number) {
   const small: number[] = [];
   const same: number[] = [];
   const big: number[] = [];
@@ -37,4 +37,8 @@ function partition(arr: number[], pivot: number) {
   });
 
   return { small, same, big };
+}
+
+export function median(arr: number[]) {
+  return bfprt(arr, arr.length >> 1);
 }
