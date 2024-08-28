@@ -5,6 +5,9 @@ import { fatal } from "../../util/misc/error";
 import { dijkstra } from "../../util/path/dijkstra";
 import { floydWarshall } from "../../util/path/floyd-warshall";
 
+// Johnson
+// O(mn + n^2 log n) time implementable
+// O(n) space implementable
 export function findTheCity(
   n: number,
   edges: [number, number, number][],
@@ -24,7 +27,6 @@ export function findTheCity(
   /** Floyd-Warshall O(n^3) time, O(n^2) space */
   const result = floydWarshall(graph);
 
-  /** Johnson: O(mn + n^2 log n) time, O(n) space */
   /** Johnson here: O(mn log n) time, O(n^2) space */
   // const result: number[][] = [];
   // for (let i = 0; i < n; i++) result.push(dijkstra(graph, i));

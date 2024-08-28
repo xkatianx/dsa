@@ -2,7 +2,9 @@
 
 import { median, partition } from "../../util/misc/bfprt";
 
-// O(n) time, O(n) space
+// BFPRT
+// 🚀 linear time,
+// 🤏 constant space possible
 export function maxIceCream(costs: number[], coins: number): number {
   if (costs.length === 0) return 0;
 

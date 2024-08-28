@@ -2,7 +2,9 @@
 
 import { bfprt } from "../../util/misc/bfprt";
 
+// BFPRT
+// 🚀 linear time
+// 🤏 linear space, constant space possible
 export function findKthLargest(nums: number[], k: number): number {
-  /** BFPRT: O(n) time, O(n) space */
   return bfprt(nums, nums.length - k);
 }

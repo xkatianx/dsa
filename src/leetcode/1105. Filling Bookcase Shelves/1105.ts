@@ -2,6 +2,7 @@
 
 import { MinDeque } from "../../util/list/minDeque";
 
+// 1D DP
 // 🚀 linear time,
 // linear space
 export default function minHeightShelves(

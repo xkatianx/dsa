@@ -1,6 +1,8 @@
 // https://leetcode.com/problems/count-sub-islands
 
-// optimal, linear time, O(1) space
+// BFS
+// 🚀 linear time,
+// 🤏 constant space
 export function countSubIslands(grid1: number[][], grid2: number[][]): number {
   let m = grid1[0].length;
   let ans = 0;

@@ -5,6 +5,9 @@ import { fatal } from "../../util/misc/error";
 import { bellmanFord } from "../../util/path/bellman-ford";
 import { dijkstra } from "../../util/path/dijkstra";
 
+// Dijkstra + Fibonacci Heap
+// O(m + n log n) time implementable
+// O(n) space implementable
 export function maxProbability(
   n: number,
   edges: [number, number][],
@@ -30,7 +33,6 @@ export function maxProbability(
   /** Bellman-Ford: O(mn) time, linear space */
   // const distances = bellmanFord(graph, start_node);
 
-  /** Dijkstra + Fibonacci Heap: O(m + n log n) time, O(n) space */
   /** Dijkstra here: O(m log n) time, O(n^2) space */
   const distances = dijkstra(graph, start_node);
 

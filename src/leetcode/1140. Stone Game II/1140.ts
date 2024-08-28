@@ -2,7 +2,9 @@
 
 import { MinDeque } from "../../util/list/minDeque";
 
-// O(n^2) time, O(n^2) space
+// 2D DP
+// O(n^2) time
+// O(n^2) space
 export function stoneGameII(piles: number[]): number {
   const suffixSum: number[] = [];
   piles.reduceRight((s, v, i) => {

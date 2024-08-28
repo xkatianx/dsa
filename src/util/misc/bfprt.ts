@@ -1,8 +1,10 @@
 /** Return the `k`-th smallest (0-index) element in `arr`.
  *
- * Time: O(arr.length)
+ * Time: O(`arr.length`)
  *
- * Space: O(arr.length)
+ * Space: O(`arr.length`)
+ *
+ * Constant space is possible: https://doi.org/10.1007/3-540-19487-8_2
  */
 export function bfprt(arr: number[], k: number): number {
   if (arr.length === 1) return arr[0];

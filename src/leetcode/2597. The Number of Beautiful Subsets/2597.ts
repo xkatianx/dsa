@@ -1,7 +1,8 @@
 // https://leetcode.com/problems/the-number-of-beautiful-subsets
 
-// O(n log n) time, O(n) space
-// O(k) space possible
+// sort
+// O(n log n) time
+// O(min(n, k)) space implementable
 export function beautifulSubsets(nums: number[], k: number): number {
   type Data = {
     num: number;
