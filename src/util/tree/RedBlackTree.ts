@@ -1,3 +1,4 @@
+import { unreachable } from "../misc/error";
 import { Dir, TreeNode } from "./node";
 
 export class RedBlackTree<T> {
@@ -140,8 +141,30 @@ export class RedBlackTree<T> {
     return [maxSmaller, minBigger];
   }
 
+  /** Return how many nodes in the tree are smaller/same/bigger than `data`. */
+  rank(data: T) {
+    const res = { small: 0, same: 0, big: 0 };
+    if (this.root == null) return res;
+    const [left, right] = this.find(data);
+    if (left === right) return this.rankNode(left!);
+
+    if (left != null) {
+      const count = this.rankNode(left);
+      res.small += count.small + count.same;
+      res.big = count.big;
+      return res;
+    }
+    if (right != null) {
+      const count = this.rankNode(right);
+      res.big += count.big + count.same;
+      res.small = count.small;
+      return res;
+    }
+    unreachable();
+  }
+
   /** Return how many nodes in the tree are smaller/same/bigger than `node`. */
-  rank(node: TreeNode<T>) {
+  rankNode(node: TreeNode<T>) {
     let count = {
       small: node.leftCount,
       same: node.count,

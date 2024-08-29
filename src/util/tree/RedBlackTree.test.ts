@@ -205,6 +205,6 @@ describe("RedBlackTree", () => {
     };
     const node = tree.find(arr[i]);
     expect(node[0]).toBe(node[1]);
-    expect(tree.rank(node[0]!)).toEqual(count);
+    expect(tree.rankNode(node[0]!)).toEqual(count);
   });
 });
