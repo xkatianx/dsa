@@ -1,10 +1,15 @@
 import { unreachable } from "../misc/error";
+import { defaultCompare } from "../misc/index";
 import { Dir, TreeNode } from "./node";
 
 export class RedBlackTree<T> {
   private root: TreeNode<T> | null = null;
 
   constructor(private compare: (a: T, b: T) => number) {}
+
+  static new() {
+    return new RedBlackTree<number>(defaultCompare);
+  }
 
   insert(data: T) {
     let newNode: TreeNode<T>;
