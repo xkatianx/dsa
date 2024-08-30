@@ -26,6 +26,18 @@ export class Graph<NodeData, EdgeData> {
     return this._size;
   }
 
+  static fromList(edges: [number, number, number?][]) {
+    const nodes: Partial<Record<number, Node<null>>> = {};
+    const graph = new Graph<null, null>();
+    edges.forEach(([from, to, weight]) => {
+      nodes[from] ??= { index: from, data: null };
+      nodes[to] ??= { index: to, data: null };
+      graph.addEdge(nodes[from], nodes[to], null, weight);
+      graph.addEdge(nodes[to], nodes[from], null, weight);
+    });
+    return graph;
+  }
+
   addNode(node: Node<NodeData>) {
     switch (this.getNode(node.index)) {
       case undefined:
