@@ -24,23 +24,41 @@ async function createFileWithDirectories(filePath: string, content: string) {
     process.exit(1);
   }
   const id = folder.match(/\d+/)![0];
-  await createFileWithDirectories(`./src/leetcode/${folder}/${id}.ts`, "// ");
+  await createFileWithDirectories(
+    `./src/leetcode/${folder}/${id}.ts`,
+    `// 
+
+export default 
+`
+  );
   await createFileWithDirectories(
     `./src/leetcode/${folder}/${id}.test.ts`,
     `import fn from "./${id}";
 
 describe("LeetCode ${id}", () => {
   it("should pass test case #1", () => {
-    const res = fn(
+    const args: Parameters<typeof fn> = [
     
-    );
-    expect(res).toBe();
+    ];
+    const ans = ;
+    const res = fn.apply(null, args)
+    expect(res).toBe(ans);
   });
   it("should pass test case #2", () => {
-    const res = fn(
+    const args: Parameters<typeof fn> = [
     
-    );
-    expect(res).toBe();
+    ];
+    const ans = ;
+    const res = fn.apply(null, args)
+    expect(res).toBe(ans);
+  });
+  it("should pass test case #3", () => {
+    const args: Parameters<typeof fn> = [
+    
+    ];
+    const ans = ;
+    const res = fn.apply(null, args)
+    expect(res).toBe(ans);
   });
 });`
   );
