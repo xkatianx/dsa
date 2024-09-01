@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/kth-largest-element-in-an-array/
 
-import { bfprt } from "../../util/misc/bfprt";
+import { bfprt } from "../../util/order/bfprt";
 
 // BFPRT
 // 🚀 linear time

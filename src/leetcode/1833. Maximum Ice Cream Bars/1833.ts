@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/maximum-ice-cream-bars
 
-import { median, partition } from "../../util/misc/bfprt";
+import { median, partition } from "../../util/order/bfprt";
 
 // BFPRT
 // 🚀 linear time,
