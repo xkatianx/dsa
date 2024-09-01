@@ -32,8 +32,8 @@ export class Graph<NodeData, EdgeData> {
     edges.forEach(([from, to, weight]) => {
       nodes[from] ??= { index: from, data: null };
       nodes[to] ??= { index: to, data: null };
-      graph.addEdge(nodes[from], nodes[to], null, weight);
-      graph.addEdge(nodes[to], nodes[from], null, weight);
+      graph.addEdge(nodes[from]!, nodes[to]!, null, weight);
+      graph.addEdge(nodes[to]!, nodes[from]!, null, weight);
     });
     return graph;
   }
