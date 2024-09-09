@@ -20,3 +20,7 @@ export function* iter(n: number) {
 export function range(n: number) {
   return Array.from(iter(n));
 }
+
+export function sum(arr?: number[]) {
+  return arr?.reduce((a, b) => a + b) ?? 0;
+}
