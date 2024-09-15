@@ -1,3 +1,4 @@
+import { speedTest } from "../../jest.test";
 import { bfprt } from "./bfprt";
 
 describe("BFPRT (Median of Medians) Algorithm", () => {
@@ -44,5 +45,26 @@ describe("BFPRT (Median of Medians) Algorithm", () => {
   test("Finds the k-th smallest element when k is n-1 (largest element)", () => {
     const arr = [50, 20, 10, 40, 30];
     expect(bfprt(arr, 4)).toBe(50); // The largest element is 50
+  });
+});
+
+describe("BFPRT speed test", () => {
+  test("Finds the median in a random array", () => {
+    for (let i = 1; i < 22; i++) {
+      const amount = 1 << i;
+      const arr = Array.from({ length: amount }, (_) => Math.random());
+      const arr2 = arr.map((v) => v);
+
+      console.log(
+        `Finds the median in a random array of ${amount} elements\n` +
+          "FN1: BFPRT, FN2: SORT"
+      );
+      const { res1, res2 } = speedTest(
+        () => bfprt(arr, amount / 2),
+        () => arr2.sort((a, b) => a - b).at(amount / 2)!
+      );
+
+      expect(res1).toBe(res2);
+    }
   });
 });

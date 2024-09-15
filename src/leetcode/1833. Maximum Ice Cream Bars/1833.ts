@@ -5,7 +5,7 @@ import { median, partition } from "../../util/order/bfprt";
 // BFPRT
 // 🚀 linear time,
 // 🤏 constant space possible
-export function maxIceCream(costs: number[], coins: number): number {
+export default function maxIceCream(costs: number[], coins: number): number {
   if (costs.length === 0) return 0;
 
   const pivot = median(costs);
