@@ -1,20 +1,25 @@
-pub fn minimum_difference_of_subsets(arr: Vec<i32>) -> i32 {
-    match arr.len() {
-        0..=1 => panic!(),
-        2..=22 => solve(arr.iter().map(|&x| x as i64).collect()).unwrap_or(0),
-        // 3^23 > 1 + 2 * 23 * 2^32
-        _ => 0,
+pub fn fair_jewelry_distribution(values: Vec<u32>) -> Vec<i32> {
+    if values.len() < 2 {
+        panic!();
     }
+
+    // 3^24 > 1 + 2 * 24 * 2^32
+    let arr: Vec<i64> = values.iter().take(24).map(|&x| x as i64).collect();
+    let mid = arr.len() / 2;
+    let bits = solve(arr).unwrap_or_else(|err| err);
+
+    let output = vec![0; values.len()];
+    bits_to_output(output, mid, bits)
 }
 
-fn solve(arr: Vec<i64>) -> Result<i32, ()> {
+fn solve(arr: Vec<i64>) -> Result<(i32, i32), (i32, i32)> {
     let mid = arr.len() / 2;
     let (left_arr, right_arr) = arr.split_at(mid);
 
     let mut left_sum = gen_sum(left_arr)?.into_iter().peekable();
     let mut right_sum = gen_sum(right_arr)?.into_iter().peekable();
 
-    let mut ans = i64::MAX;
+    let mut min_diff = i64::MAX;
     let mut ans_bits = (0, 0);
 
     while let (Some(&left), Some(&right)) = (left_sum.peek(), right_sum.peek()) {
@@ -25,37 +30,35 @@ fn solve(arr: Vec<i64>) -> Result<i32, ()> {
         }
         if valid_bits(left.1, right.1) {
             let diff = (left.0 - right.0).abs();
-            if diff < ans {
-                ans = diff;
+            if diff < min_diff {
+                min_diff = diff;
                 ans_bits = (left.1, right.1)
             }
         }
     }
 
-    print_sets(ans_bits, left_arr, right_arr);
-    Ok(ans as i32)
+    Ok(ans_bits)
 }
 
-fn print_sets(mut ans_pair: (i32, i32), left_arr: &[i64], right_arr: &[i64]) {
-    let mut left_set = vec![];
-    let mut right_set = vec![];
+fn bits_to_output(mut arr: Vec<i32>, mid: usize, mut bits: (i32, i32)) -> Vec<i32> {
     for i in 0..32 {
-        if ans_pair.0 & 1 > 0 {
-            left_set.push(left_arr[i]);
+        if bits.0 & 1 > 0 {
+            arr[i] = 1;
         }
-        if ans_pair.0 & 2 > 0 {
-            right_set.push(left_arr[i]);
+        if bits.0 & 2 > 0 {
+            arr[i] = -1;
         }
-        if ans_pair.1 & 1 > 0 {
-            right_set.push(right_arr[i]);
+        if bits.1 & 1 > 0 {
+            arr[mid + i] = -1;
         }
-        if ans_pair.1 & 2 > 0 {
-            left_set.push(right_arr[i]);
+        if bits.1 & 2 > 0 {
+            arr[mid + i] = 1;
         }
-        ans_pair.0 >>= 2;
-        ans_pair.1 >>= 2;
+        bits.0 >>= 2;
+        bits.1 >>= 2;
     }
-    println!("set 1: {:?}\nset 2: {:?}", left_set, right_set);
+
+    arr
 }
 
 /* true if we do select two non-empty disjoint subsets */
@@ -63,7 +66,7 @@ fn valid_bits(a: i32, b: i32) -> bool {
     a - 1 & a != 0 || b - 1 & b != 0 || a * b != 0
 }
 
-fn gen_sum(arr: &[i64]) -> Result<Vec<(i64, i32)>, ()> {
+fn gen_sum(arr: &[i64]) -> Result<Vec<(i64, i32)>, (i32, i32)> {
     let mut output = vec![(0_i64, 0)];
 
     let mut mask_this = 1;
@@ -86,7 +89,7 @@ fn gen_sum(arr: &[i64]) -> Result<Vec<(i64, i32)>, ()> {
 
     let mid = output.len() / 2 + 1;
     if output[mid].0 == 0 {
-        Err(())
+        Err((output[mid - 1].1, 0))
     } else {
         output.truncate(mid);
         Ok(output)
@@ -138,50 +141,55 @@ mod tests {
     use super::*;
     use rand::Rng;
 
+    fn inner_product(vec1: Vec<u32>, vec2: Vec<i32>) -> i32 {
+        vec1.iter()
+            .zip(vec2.iter())
+            .map(|(&x, &y)| (x as i64) * (y as i64))
+            .sum::<i64>() as i32
+    }
+
+    fn test(values: Vec<u32>, expect_diff: i32) {
+        println!("input: {:?}", &values);
+        let output = fair_jewelry_distribution(values.clone());
+        println!("output: {:?}", &output);
+        assert!(output.contains(&1), "Bob has nothing.");
+        assert!(output.contains(&-1), "Carol has nothing.");
+        let diff = inner_product(values, output).abs();
+        assert_eq!(expect_diff, diff, "The distribution is not fair.");
+    }
+
     #[test]
     fn case1() {
-        let arr = vec![39, 44, 9, 57];
-        let result = minimum_difference_of_subsets(arr);
-        assert_eq!(result, 4);
+        let values = vec![39, 44, 9, 57];
+        let expect_diff = 4;
+        test(values, expect_diff);
     }
 
     #[test]
     fn case2() {
-        let arr = vec![66, 31, 35];
-        let result = minimum_difference_of_subsets(arr);
-        assert_eq!(result, 0);
+        let values = vec![1, 2, 3, 42, 4242, 424242];
+        let expect_diff = 0;
+        test(values, expect_diff);
     }
 
     #[test]
     fn case3() {
-        let arr = vec![97, 12, 19, 90];
-        let result = minimum_difference_of_subsets(arr);
-        assert_eq!(result, 0);
-    }
-
-    #[test]
-    fn case4() {
-        let arr = vec![1, 42, 1, 4242];
-        let result = minimum_difference_of_subsets(arr);
-        assert_eq!(result, 0);
-    }
-
-    #[test]
-    fn case5() {
-        let arr = vec![1, 2, 3, 42, 4242, 424242];
-        let result = minimum_difference_of_subsets(arr);
-        assert_eq!(result, 0);
+        let values = vec![97, 12, 19, 90];
+        let expect_diff = 0;
+        test(values, expect_diff);
     }
 
     #[test]
     fn case_random() {
         let mut rng = rand::thread_rng();
 
-        for n in 2..40 {
-            let arr: Vec<i32> = (0..n).map(|_| rng.gen_range(1..=i32::MAX)).collect();
-            println!("arr: {:?}", &arr);
-            let result = minimum_difference_of_subsets(arr);
-            println!("ans: {:?}\n", result);
+        for n in 2..30 {
+            let values: Vec<u32> = (0..n).map(|_| rng.gen_range(1..=u32::MAX)).collect();
+            println!("input: {:?}", &values);
+            let output = fair_jewelry_distribution(values.clone());
+            println!("output: {:?}", &output);
+            let diff = inner_product(values, output).abs();
+            println!("output diff: {}", diff);
         }
     }
 }
