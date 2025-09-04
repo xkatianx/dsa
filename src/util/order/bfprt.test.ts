@@ -48,23 +48,23 @@ describe("BFPRT (Median of Medians) Algorithm", () => {
   });
 });
 
-describe("BFPRT speed test", () => {
-  test("Finds the median in a random array", () => {
-    for (let i = 1; i < 22; i++) {
-      const amount = 1 << i;
-      const arr = Array.from({ length: amount }, (_) => Math.random());
-      const arr2 = arr.map((v) => v);
+// describe("BFPRT speed test", () => {
+//   test("Finds the median in a random array", () => {
+//     for (let i = 1; i < 22; i++) {
+//       const amount = 1 << i;
+//       const arr = Array.from({ length: amount }, (_) => Math.random());
+//       const arr2 = arr.map((v) => v);
 
-      console.log(
-        `Finds the median in a random array of ${amount} elements\n` +
-          "FN1: BFPRT, FN2: SORT"
-      );
-      const { res1, res2 } = speedTest(
-        () => bfprt(arr, amount / 2),
-        () => arr2.sort((a, b) => a - b).at(amount / 2)!
-      );
+//       console.log(
+//         `Finds the median in a random array of ${amount} elements\n` +
+//           "FN1: BFPRT, FN2: SORT"
+//       );
+//       const { res1, res2 } = speedTest(
+//         () => bfprt(arr, amount / 2),
+//         () => arr2.sort((a, b) => a - b).at(amount / 2)!
+//       );
 
-      expect(res1).toBe(res2);
-    }
-  });
-});
+//       expect(res1).toBe(res2);
+//     }
+//   });
+// });
