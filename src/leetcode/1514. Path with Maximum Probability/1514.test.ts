@@ -1,4 +1,5 @@
 import { maxProbability } from "./1514";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode 1514", () => {
   it("should pass test case #1", () => {

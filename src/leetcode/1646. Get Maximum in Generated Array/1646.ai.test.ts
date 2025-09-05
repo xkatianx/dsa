@@ -1,6 +1,7 @@
 import { speedTest } from "../../jest.test";
 import fn from "./1646";
 import ai from "./1646.ai";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode 1646 - full", () => {
   const stop = 1000;

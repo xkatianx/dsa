@@ -1,4 +1,5 @@
 import { MinStack } from "./minStack";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("MinStack", () => {
   let minStack: MinStack<number>;
@@ -7,7 +8,7 @@ describe("MinStack", () => {
     minStack = new MinStack<number>((a, b) => a - b);
   });
 
-  test("should push elements and track the minimum", () => {
+  it("should push elements and track the minimum", () => {
     minStack.push(5);
     minStack.push(3);
     minStack.push(7);
@@ -18,7 +19,7 @@ describe("MinStack", () => {
     expect(minStack.length).toBe(4);
   });
 
-  test("should pop elements and update the minimum", () => {
+  it("should pop elements and update the minimum", () => {
     minStack.push(5);
     minStack.push(3);
     minStack.push(7);
@@ -37,7 +38,7 @@ describe("MinStack", () => {
     expect(minStack.length).toBe(1);
   });
 
-  test("should handle duplicate elements correctly", () => {
+  it("should handle duplicate elements correctly", () => {
     minStack.push(2);
     minStack.push(2);
     minStack.push(3);
@@ -52,7 +53,7 @@ describe("MinStack", () => {
     expect(minStack.min).toBe(2);
   });
 
-  test("should handle edge case with a single element", () => {
+  it("should handle edge case with a single element", () => {
     minStack.push(42);
 
     expect(minStack.top).toBe(42);
@@ -65,14 +66,14 @@ describe("MinStack", () => {
     expect(minStack.length).toBe(0);
   });
 
-  test("should handle empty stack correctly", () => {
+  it("should handle empty stack correctly", () => {
     expect(minStack.top).toBeUndefined();
     expect(minStack.min).toBeUndefined();
     expect(minStack.length).toBe(0);
     expect(minStack.pop()).toBeUndefined();
   });
 
-  test("should access elements at specific index", () => {
+  it("should access elements at specific index", () => {
     minStack.push(10);
     minStack.push(20);
     minStack.push(30);
@@ -83,7 +84,7 @@ describe("MinStack", () => {
     expect(minStack.at(3)).toBeUndefined(); // Out of bounds
   });
 
-  test("should work with custom compare function", () => {
+  it("should work with custom compare function", () => {
     const stringStack = new MinStack<string>((a, b) => a.localeCompare(b));
     stringStack.push("apple");
     stringStack.push("banana");

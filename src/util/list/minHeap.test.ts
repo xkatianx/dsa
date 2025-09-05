@@ -1,4 +1,5 @@
 import { MinHeap } from "./minHeap";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("MinHeap", () => {
   let heap: MinHeap<number>;

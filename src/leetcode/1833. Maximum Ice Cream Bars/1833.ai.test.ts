@@ -1,6 +1,7 @@
 import { randomInt } from "crypto";
 import fn from "./1833";
 import ai from "./1833.ai";
+import { it, expect, describe } from "vitest";
 import { speedTest } from "../../jest.test";
 
 describe("LeetCode 1833 - random test", () => {
