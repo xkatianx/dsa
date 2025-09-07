@@ -2,9 +2,7 @@
 
 import solve from "../3025. Find the Number of Ways to Place People I/3025";
 
-// Divide and Conquer, Merge Sort, Monotonic Stack, Disjoint Set
-// O(n α(n) log n) time
+// Divide and Conquer, Merge Sort, Monotonic Stack
+// O(n log n) time
 // linear space
-export default function numberOfPairs(points: number[][]): number {
-  return solve(points);
-}
+export default solve;

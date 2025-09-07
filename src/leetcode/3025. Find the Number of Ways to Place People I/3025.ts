@@ -1,14 +1,14 @@
 // https://leetcode.com/problems/find-the-number-of-ways-to-place-people-i
 
-import { Stack } from "../../util/list/stack";
-import { DisjointSet } from "../../util/tree/DisjointSet";
+import { enumerate } from "../../util/function";
+import { MonotonicStack } from "../../util/list/monotonicStack";
+import { mergeSort } from "../../util/order/mergeSort";
 
-// Divide and Conquer, Merge Sort, Monotonic Stack, Disjoint Set
-// O(n α(n) log n) time
+// Divide and Conquer, Merge Sort, Monotonic Stack
+// O(n log n) time
 // linear space
 export default function numberOfPairs(points: number[][]): number {
-  const arr = betterInput(points as [number, number][]);
-  return solve1(arr);
+  return solve1(betterInput(points as [number, number][]));
 }
 
 function betterInput(points: [number, number][]): Point[] {
@@ -26,28 +26,39 @@ function betterInput(points: [number, number][]): Point[] {
   return arr;
 }
 
-class Point extends DisjointSet {
-  private _idx = 0;
-  constructor(public x: number, public y: number) {
-    super();
+class Point {
+  idx = Infinity;
+  _linked: WeakRef<Point> | null = null;
+
+  constructor(public x: number, public y: number) {}
+
+  get linked() {
+    return this._linked?.deref() ?? null;
   }
 
-  get idx() {
-    return this.find()._idx;
+  set linked(value: Point | null) {
+    this._linked = value ? new WeakRef(value) : null;
   }
 
-  set idx(value: number) {
-    this.find()._idx = value;
+  hasLink() {
+    return this.linked != null;
   }
 
-  find(): Point {
-    return super.find() as Point;
+  link(point: Point) {
+    if (this.hasLink()) return;
+    point.linked?.unlink();
+    this.linked = point;
+    point.linked = this;
   }
 
-  union(other: Point) {
-    const idx = Math.min(this.idx, other.idx);
-    super.union(other);
-    this.idx = idx;
+  unlink() {
+    this.linked = null;
+    return this;
+  }
+
+  reset() {
+    this.idx = Infinity;
+    return this.unlink();
   }
 }
 
@@ -58,66 +69,59 @@ function solve1(points: Point[]): number {
   const mid = points.length >> 1;
   const top = points.slice(0, mid);
   const bottom = points.slice(mid);
-  const ans =
-    solve1(top) + solve1(bottom) + solve2(top.slice(), bottom.slice());
+  const ans = solve1(top) + solve1(bottom);
 
-  // mergeSort by TimSort
-  [...top, ...bottom]
-    .sort((a, b) => a.x - b.x)
-    .forEach((point, index) => {
-      points[index] = point;
-    });
+  const sorted = mergeSort(
+    top[Symbol.iterator](),
+    bottom[Symbol.iterator](),
+    (a, b) => a.x - b.x
+  );
+  for (const [idx, point] of enumerate(sorted)) points[idx] = point.reset();
 
-  return ans;
+  return ans + solve2(top, bottom);
 }
 
-class MonoStack extends Stack<Point> {
-  private consumeCondition: (newVal: number, oldVal: number) => boolean;
+class DescendingStack extends MonotonicStack<Point> {
+  onPop = (pushed: Point, popped: Point) => {
+    popped.linked?.unlink();
+  };
 
-  constructor(ascending: boolean) {
-    super();
-    this.consumeCondition = ascending
-      ? (newVal, oldVal) => newVal <= oldVal
-      : (newVal, oldVal) => oldVal < newVal;
+  constructor() {
+    super((newVal, oldVal) => !oldVal.hasLink() || newVal.y > oldVal.y);
   }
+}
+class AscendingStack extends MonotonicStack<Point> {
+  onPop = (pushed: Point, popped: Point) => {
+    popped.linked?.unlink().link(pushed);
+  };
 
-  get lastIdx() {
-    return this.top?.idx ?? -1;
+  constructor() {
+    super((newVal, oldVal) => newVal.y < oldVal.y);
   }
 
   push(point: Point) {
-    point.reset();
-    point.idx = this.lastIdx + 1;
-    while (this.consumeCondition(point.y, this.top?.y ?? NaN)) {
-      this.pop()!.union(point);
-    }
     super.push(point);
-  }
-
-  count(leftPoint: Point | undefined) {
-    let minus = leftPoint?.idx ?? -1;
-    if (leftPoint != null && leftPoint !== this.at(leftPoint.idx)) minus -= 1;
-    return this.lastIdx - minus;
+    point.idx = this.length - 1;
   }
 }
 
 function solve2(topPoints: Point[], bottomPoints: Point[]) {
+  topPoints.push(new Point(Infinity, 0));
   topPoints.reverse();
 
-  const topStack = new MonoStack(true);
-  const bottomStack = new MonoStack(false);
-
-  const bottomToTop = [];
+  const [topStack, bottomStack] = [new AscendingStack(), new DescendingStack()];
 
   let ans = 0;
   for (const bottom of bottomPoints) {
-    while ((topPoints.at(-1)?.x ?? NaN) <= bottom.x)
+    while (topPoints.at(-1)!.x < bottom.x) {
       topStack.push(topPoints.pop()!);
-    bottomToTop[bottom.x] = topStack.top;
+    }
     bottomStack.push(bottom);
-    const closestHigher = bottomStack.at(-2);
-    const leftmostExclusiveTop = bottomToTop[closestHigher?.x ?? NaN];
-    ans += topStack.count(leftmostExclusiveTop);
+
+    const leftTop = bottomStack.at(-2)?.linked;
+    ans += Math.max(0, topStack.length - (leftTop?.idx ?? 0));
+
+    topPoints.at(-1)!.link(bottom);
   }
   return ans;
 }
