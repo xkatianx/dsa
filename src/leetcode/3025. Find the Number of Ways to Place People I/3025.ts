@@ -1,12 +1,17 @@
 // https://leetcode.com/problems/find-the-number-of-ways-to-place-people-i
 
+import { SPACE, tags, TECHNIQUE, TIME } from "../../tag";
 import { enumerate } from "../../util/function";
 import { MonotonicStack } from "../../util/list/monotonicStack";
 import { mergeSort } from "../../util/order/mergeSort";
 
-// Divide and Conquer, Merge Sort, Monotonic Stack
-// O(n log n) time
-// linear space
+// prettier-ignore
+tags(
+  TECHNIQUE.divideAndConquer, TECHNIQUE.mergeSort, TECHNIQUE.monotonicStack,
+  TIME.logarithmic,
+  SPACE.linear
+);
+
 export default function numberOfPairs(points: number[][]): number {
   return solve1(betterInput(points as [number, number][]));
 }
