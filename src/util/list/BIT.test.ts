@@ -1,4 +1,5 @@
 import { BIT } from "./BIT";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("Binary Indexed Tree (BIT)", () => {
   let bit: BIT;
@@ -7,11 +8,11 @@ describe("Binary Indexed Tree (BIT)", () => {
     bit = new BIT();
   });
 
-  test("should initialize with zero sum", () => {
+  it("should initialize with zero sum", () => {
     expect(bit.query(10)).toBe(0); // The sum should be 0 initially
   });
 
-  test("should update and query single elements correctly", () => {
+  it("should update and query single elements correctly", () => {
     bit.update(1, 5);
     bit.update(2, 3);
     bit.update(3, 7);
@@ -21,7 +22,7 @@ describe("Binary Indexed Tree (BIT)", () => {
     expect(bit.query(3)).toBe(15); // sum from index 1 to 3
   });
 
-  test("should perform range queries correctly", () => {
+  it("should perform range queries correctly", () => {
     bit.update(1, 5);
     bit.update(2, 3);
     bit.update(3, 7);
@@ -31,7 +32,7 @@ describe("Binary Indexed Tree (BIT)", () => {
     expect(bit.queryRange(2, 4)).toBe(16); // sum from index 2 to 4
   });
 
-  test("should handle multiple updates and queries", () => {
+  it("should handle multiple updates and queries", () => {
     bit.update(5, 10);
     bit.update(3, 2);
     bit.update(7, 4);
@@ -42,13 +43,13 @@ describe("Binary Indexed Tree (BIT)", () => {
     expect(bit.queryRange(3, 7)).toBe(13); // sum from index 3 to 7 (2 + 0 + 0 + 4)
   });
 
-  test("should handle edge cases for empty and full ranges", () => {
+  it("should handle edge cases for empty and full ranges", () => {
     expect(bit.queryRange(1, 1)).toBe(0); // Empty range before any updates
     bit.update(10, 1);
     expect(bit.queryRange(1, 10)).toBe(1); // Entire range after a single update at the end
   });
 
-  test("should work with large indices", () => {
+  it("should work with large indices", () => {
     bit.update(1000, 5);
     bit.update(5000, 10);
     bit.update(10000, 20);

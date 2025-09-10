@@ -1,6 +1,7 @@
 import fn from "./2699";
 import { Graph } from "../../util/graph/graph";
 import { dijkstra } from "../../util/path/dijkstra";
+import { it, expect, describe } from "vitest";
 
 function evaluate(
   arr: number[][],

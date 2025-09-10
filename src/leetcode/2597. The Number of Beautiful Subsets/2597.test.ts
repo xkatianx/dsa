@@ -1,4 +1,5 @@
 import { beautifulSubsets } from "./2597";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode 2597", () => {
   it("should pass test case #1", () => {

@@ -1,4 +1,5 @@
 import { Stack } from "./stack";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("Stack", () => {
   let stack: Stack<number>;
@@ -9,12 +10,12 @@ describe("Stack", () => {
     referenceArray = [];
   });
 
-  test("should initialize with length 0", () => {
+  it("should initialize with length 0", () => {
     expect(stack.length).toBe(0);
     expect(stack.top).toBeUndefined();
   });
 
-  test("should handle push and pop operations correctly", () => {
+  it("should handle push and pop operations correctly", () => {
     stack.push(1);
     stack.push(2);
     stack.push(3);
@@ -31,7 +32,7 @@ describe("Stack", () => {
     expect(stack.top).toBeUndefined();
   });
 
-  test("should access elements using at method correctly", () => {
+  it("should access elements using at method correctly", () => {
     stack.push(1);
     stack.push(2);
     stack.push(3);
@@ -47,7 +48,7 @@ describe("Stack", () => {
     expect(stack.at(-4)).toBeUndefined(); // Out of bounds
   });
 
-  test("should maintain consistency after multiple operations", () => {
+  it("should maintain consistency after multiple operations", () => {
     stack.push(1);
     stack.push(2);
     stack.push(3);
@@ -65,7 +66,7 @@ describe("Stack", () => {
     expect(stack.top).toBe(1);
   });
 
-  test("should match behavior of a real array with random operations", () => {
+  it("should match behavior of a real array with random operations", () => {
     const operations = 1000;
     const maxValue = 1000;
 

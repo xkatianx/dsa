@@ -1,4 +1,5 @@
 import { Deque } from "./deque";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("Deque", () => {
   let deque: Deque<number>;
@@ -7,13 +8,13 @@ describe("Deque", () => {
     deque = new Deque<number>();
   });
 
-  test("should initialize with length 0", () => {
+  it("should initialize with length 0", () => {
     expect(deque.length).toBe(0);
     expect(deque.first).toBeUndefined();
     expect(deque.last).toBeUndefined();
   });
 
-  test("should handle push and pop operations correctly", () => {
+  it("should handle push and pop operations correctly", () => {
     deque.push(1);
     deque.push(2);
     deque.push(3);
@@ -32,7 +33,7 @@ describe("Deque", () => {
     expect(deque.last).toBeUndefined();
   });
 
-  test("should handle unshift and shift operations correctly", () => {
+  it("should handle unshift and shift operations correctly", () => {
     deque.unshift(1);
     deque.unshift(2);
     deque.unshift(3);
@@ -51,7 +52,7 @@ describe("Deque", () => {
     expect(deque.last).toBeUndefined();
   });
 
-  test("should handle mixed push, unshift, pop, and shift operations", () => {
+  it("should handle mixed push, unshift, pop, and shift operations", () => {
     deque.push(1);
     deque.unshift(2);
     deque.push(3);
@@ -69,7 +70,7 @@ describe("Deque", () => {
     expect(deque.last).toBe(1);
   });
 
-  test("should access elements using at method correctly", () => {
+  it("should access elements using at method correctly", () => {
     deque.push(1);
     deque.push(2);
     deque.push(3);
@@ -85,7 +86,7 @@ describe("Deque", () => {
     expect(deque.at(-4)).toBeUndefined(); // Out of bounds
   });
 
-  test("should iterate correctly using iter method", () => {
+  it("should iterate correctly using iter method", () => {
     deque.push(1);
     deque.push(2);
     deque.push(3);
@@ -98,7 +99,7 @@ describe("Deque", () => {
     ]);
   });
 
-  test("should iterate correctly using iterRight method", () => {
+  it("should iterate correctly using iterRight method", () => {
     deque.push(1);
     deque.push(2);
     deque.push(3);
@@ -111,7 +112,7 @@ describe("Deque", () => {
     ]);
   });
 
-  test("should maintain consistency after multiple operations", () => {
+  it("should maintain consistency after multiple operations", () => {
     deque.push(1);
     deque.unshift(2);
     deque.push(3);

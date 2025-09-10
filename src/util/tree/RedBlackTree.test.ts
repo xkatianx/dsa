@@ -1,5 +1,6 @@
 import { randomInt } from "crypto";
 import { RedBlackTree } from "./RedBlackTree";
+import { it, expect, describe, beforeEach } from "vitest";
 
 describe("RedBlackTree", () => {
   let tree: RedBlackTree<number>;
@@ -14,7 +15,7 @@ describe("RedBlackTree", () => {
       .flat();
   }
 
-  test("should insert elements and maintain the Red-Black Tree properties", () => {
+  it("should insert elements and maintain the Red-Black Tree properties", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(30);
@@ -25,7 +26,7 @@ describe("RedBlackTree", () => {
     expect(toList(tree)).toEqual([10, 15, 20, 25, 30]);
   });
 
-  test("should find the exact node if it exists", () => {
+  it("should find the exact node if it exists", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(30);
@@ -38,7 +39,7 @@ describe("RedBlackTree", () => {
     expect(minBigger?.data).toBe(20);
   });
 
-  test("should find nearest neighbors for non-existing value", () => {
+  it("should find nearest neighbors for non-existing value", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(30);
@@ -51,7 +52,7 @@ describe("RedBlackTree", () => {
     expect(minBigger?.data).toBe(25);
   });
 
-  test("should return correct nodes when the value is outside the existing range", () => {
+  it("should return correct nodes when the value is outside the existing range", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(30);
@@ -65,7 +66,7 @@ describe("RedBlackTree", () => {
     expect(minBigger?.data).toBe(10);
   });
 
-  test("should correctly identify nodes in a larger tree", () => {
+  it("should correctly identify nodes in a larger tree", () => {
     const values = [15, 10, 20, 5, 12, 17, 25];
     values.forEach((val) => tree.insert(val));
 
@@ -75,7 +76,7 @@ describe("RedBlackTree", () => {
     expect(minBigger?.data).toBe(15);
   });
 
-  test("should delete a leaf node", () => {
+  it("should delete a leaf node", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(5);
@@ -88,7 +89,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should delete a node with one child", () => {
+  it("should delete a node with one child", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(5);
@@ -102,7 +103,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should delete a node with two children", () => {
+  it("should delete a node with two children", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(5);
@@ -117,7 +118,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should delete the root node", () => {
+  it("should delete the root node", () => {
     tree.insert(10);
     tree.insert(20);
     tree.insert(5);
@@ -130,7 +131,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should handle complex deletion scenarios", () => {
+  it("should handle complex deletion scenarios", () => {
     const values = [30, 20, 40, 10, 25, 35, 50];
     values.forEach((val) => tree.insert(val));
 
@@ -142,7 +143,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should delete a node that causes multiple fixes", () => {
+  it("should delete a node that causes multiple fixes", () => {
     const values = [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93];
     values.forEach((val) => tree.insert(val));
 
@@ -156,7 +157,7 @@ describe("RedBlackTree", () => {
     expect(tree["root"]?.red).toBeFalsy(); // Root should be black
   });
 
-  test("should delete nodes in succession and maintain Red-Black properties", () => {
+  it("should delete nodes in succession and maintain Red-Black properties", () => {
     const values = [20, 10, 30, 5, 15, 25, 35];
     values.forEach((val) => tree.insert(val));
 

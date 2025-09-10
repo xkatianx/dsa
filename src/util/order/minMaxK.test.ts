@@ -1,7 +1,8 @@
 import { minMaxK } from "./minMaxK";
+import { it, expect, describe } from "vitest";
 
 describe("minMaxK", () => {
-  test("should return the first k min/max unique values in order with their amounts", () => {
+  it("should return the first k min/max unique values in order with their amounts", () => {
     const arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
     const k = 3;
     const result = minMaxK(arr, k);
@@ -19,7 +20,7 @@ describe("minMaxK", () => {
     ]);
   });
 
-  test("should handle arrays with less than k unique values", () => {
+  it("should handle arrays with less than k unique values", () => {
     const arr = [2, 2, 2, 2];
     const k = 3;
     const result = minMaxK(arr, k);
@@ -37,7 +38,7 @@ describe("minMaxK", () => {
     ]);
   });
 
-  test("should handle empty array", () => {
+  it("should handle empty array", () => {
     const arr: number[] = [];
     const k = 3;
     const result = minMaxK(arr, k);
@@ -55,7 +56,7 @@ describe("minMaxK", () => {
     ]);
   });
 
-  test("should handle arrays with negative numbers", () => {
+  it("should handle arrays with negative numbers", () => {
     const arr = [-5, -1, -3, -2, -4];
     const k = 2;
     const result = minMaxK(arr, k);
@@ -71,7 +72,7 @@ describe("minMaxK", () => {
     ]);
   });
 
-  test("should handle arrays with k = 1", () => {
+  it("should handle arrays with k = 1", () => {
     const arr = [7, 3, 8, 3, 9, 1];
     const k = 1;
     const result = minMaxK(arr, k);
@@ -81,7 +82,7 @@ describe("minMaxK", () => {
     expect(result.max).toEqual([{ value: 9, amount: 1 }]);
   });
 
-  test("should return the first k min/max unique values in order with duplicates handled", () => {
+  it("should return the first k min/max unique values in order with duplicates handled", () => {
     const arr = [10, 10, 9, 9, 8, 8, 7, 7];
     const k = 3;
     const result = minMaxK(arr, k);

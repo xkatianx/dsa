@@ -1,4 +1,5 @@
 import fn from "./1530";
+import { it, expect, describe } from "vitest";
 
 // Definition for a binary tree node.
 export class TreeNode {

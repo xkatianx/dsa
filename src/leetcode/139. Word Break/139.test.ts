@@ -1,4 +1,5 @@
 import fn from "./139";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode 139", () => {
   it("should pass test case #1", () => {

@@ -1,4 +1,5 @@
 import { stoneGameII } from "./1140";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode 1140", () => {
   it("should pass test case #1", () => {

@@ -36,4 +36,9 @@ export class DisjointSet {
   isConnecting(other: DisjointSet): boolean {
     return this.find() === other.find();
   }
+
+  reset() {
+    this.parent = this;
+    this.rank = 0;
+  }
 }
