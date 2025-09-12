@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/find-the-number-of-ways-to-place-people-i
 
 import { SPACE, tags, TECHNIQUE, TIME } from "../../tag";
-import { enumerate } from "../../util/function";
+import { enumerate } from "../../util/misc";
 import { MonotonicStack } from "../../util/list/monotonicStack";
 import { mergeSort } from "../../util/order/mergeSort";
 
