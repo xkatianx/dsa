@@ -12,3 +12,6 @@ pub mod lc3025;
 
 #[path = "3027. Find the Number of Ways to Place People II/3027.rs"]
 pub mod lc3027;
+
+#[path = "462. Minimum Moves to Equal Array Elements II/462.rs"]
+pub mod lc462;
