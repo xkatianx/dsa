@@ -34,6 +34,7 @@ export default
   await createFileWithDirectories(
     `./src/leetcode/${folder}/${id}.test.ts`,
     `import fn from "./${id}";
+import { it, expect, describe } from "vitest";
 
 describe("LeetCode ${id}", () => {
   it("should pass test case #1", () => {
@@ -73,6 +74,9 @@ pub mod lc${id};
   await createFileWithDirectories(
     `./src/leetcode/${folder}/${id}.rs`,
     `// 
+pub fn f() -> i32 {
+    0
+}
 
 #[cfg(test)]
 mod tests {
