@@ -1,12 +1,9 @@
 export * from "./iter";
 export * from "./error";
+export * from "./math";
 
 export function defaultCompare(a: number, b: number) {
   return a - b;
-}
-
-export function sum(arr?: number[]) {
-  return arr?.reduce((a, b) => a + b) ?? 0;
 }
 
 export function cache<T extends (...args: any[]) => unknown>(
