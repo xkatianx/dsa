@@ -204,3 +204,28 @@ describe("Buy One Get One Free", () => {
     });
   });
 });
+
+function* rng(seed: number) {
+  let state = BigInt(seed);
+  const a = 1103515245n;
+  const c = 12345n;
+  const m = 2n ** 32n;
+
+  while (true) {
+    state = (a * state + c) % m;
+    yield Number(state);
+  }
+}
+
+function rng2(seed: number, length: number, min: number, max: number) {
+  const gen = rng(seed);
+  return Array.from(
+    { length },
+    () => Math.floor(gen.next().value! % (max - min + 1)) + min
+  );
+}
+
+test("fixed rng test #1", () => {
+  const arr = rng2(9999, 99999, 1, 2147483646);
+  expect(minEarnings([...arr])).toBe(59279096403998);
+});
