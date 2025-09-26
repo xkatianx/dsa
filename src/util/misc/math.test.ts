@@ -1,4 +1,4 @@
-import { sum, clampL, clampR } from "./math";
+import { sum, clampL, clampR, max, min } from "./math";
 import { describe, it, expect } from "vitest";
 
 describe("Math utilities", () => {
@@ -139,6 +139,118 @@ describe("Math utilities", () => {
 
       expect(clampL(-5, 10, 0)).toBe(10); // clampL returns min
       expect(clampR(-5, 10, 0)).toBe(0); // clampR returns max
+    });
+  });
+
+  describe("max", () => {
+    it("should return NaN for empty array", () => {
+      expect(max([])).toBeNaN();
+    });
+
+    it("should return the number for single element array", () => {
+      expect(max([5])).toBe(5);
+      expect(max([-3])).toBe(-3);
+      expect(max([0])).toBe(0);
+    });
+
+    it("should find maximum in positive numbers", () => {
+      expect(max([1, 2, 3, 4, 5])).toBe(5);
+      expect(max([10, 20, 30])).toBe(30);
+      expect(max([5, 1, 9, 3])).toBe(9);
+    });
+
+    it("should find maximum in negative numbers", () => {
+      expect(max([-1, -2, -3])).toBe(-1);
+      expect(max([-10, -20, -30])).toBe(-10);
+      expect(max([-5, -1, -9, -3])).toBe(-1);
+    });
+
+    it("should find maximum in mixed positive and negative numbers", () => {
+      expect(max([1, -2, 3, -4, 5])).toBe(5);
+      expect(max([-10, 20, -30, 40])).toBe(40);
+      expect(max([-5, 0, 5])).toBe(5);
+    });
+
+    it("should handle decimal numbers", () => {
+      expect(max([1.5, 2.5, 3.5])).toBe(3.5);
+      expect(max([0.1, 0.2, 0.3])).toBe(0.3);
+      expect(max([1.1, 1.0, 1.2])).toBe(1.2);
+    });
+
+    it("should handle zero values", () => {
+      expect(max([0, 0, 0])).toBe(0);
+      expect(max([1, 0, -1])).toBe(1);
+      expect(max([-5, 0, 5])).toBe(5);
+    });
+
+    it("should handle duplicate maximum values", () => {
+      expect(max([5, 3, 5, 1])).toBe(5);
+      expect(max([1, 1, 1])).toBe(1);
+    });
+
+    it("should handle large numbers", () => {
+      expect(max([Number.MAX_SAFE_INTEGER, 1, 2])).toBe(
+        Number.MAX_SAFE_INTEGER
+      );
+      expect(max([1, 2, Number.MAX_SAFE_INTEGER])).toBe(
+        Number.MAX_SAFE_INTEGER
+      );
+    });
+  });
+
+  describe("min", () => {
+    it("should return NaN for empty array", () => {
+      expect(min([])).toBeNaN();
+    });
+
+    it("should return the number for single element array", () => {
+      expect(min([5])).toBe(5);
+      expect(min([-3])).toBe(-3);
+      expect(min([0])).toBe(0);
+    });
+
+    it("should find minimum in positive numbers", () => {
+      expect(min([1, 2, 3, 4, 5])).toBe(1);
+      expect(min([10, 20, 30])).toBe(10);
+      expect(min([5, 1, 9, 3])).toBe(1);
+    });
+
+    it("should find minimum in negative numbers", () => {
+      expect(min([-1, -2, -3])).toBe(-3);
+      expect(min([-10, -20, -30])).toBe(-30);
+      expect(min([-5, -1, -9, -3])).toBe(-9);
+    });
+
+    it("should find minimum in mixed positive and negative numbers", () => {
+      expect(min([1, -2, 3, -4, 5])).toBe(-4);
+      expect(min([-10, 20, -30, 40])).toBe(-30);
+      expect(min([-5, 0, 5])).toBe(-5);
+    });
+
+    it("should handle decimal numbers", () => {
+      expect(min([1.5, 2.5, 3.5])).toBe(1.5);
+      expect(min([0.1, 0.2, 0.3])).toBe(0.1);
+      expect(min([1.1, 1.0, 1.2])).toBe(1.0);
+    });
+
+    it("should handle zero values", () => {
+      expect(min([0, 0, 0])).toBe(0);
+      expect(min([1, 0, -1])).toBe(-1);
+      expect(min([-5, 0, 5])).toBe(-5);
+    });
+
+    it("should handle duplicate minimum values", () => {
+      expect(min([5, 3, 1, 1])).toBe(1);
+      expect(min([1, 1, 1])).toBe(1);
+    });
+
+    it("should handle large numbers", () => {
+      expect(min([Number.MIN_SAFE_INTEGER, 1, 2])).toBe(
+        Number.MIN_SAFE_INTEGER
+      );
+      expect(min([1, 2, Number.MIN_SAFE_INTEGER])).toBe(
+        Number.MIN_SAFE_INTEGER
+      );
     });
   });
 });
