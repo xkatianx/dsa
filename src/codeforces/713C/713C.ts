@@ -1,4 +1,5 @@
 // https://codeforces.com/contest/713/problem/C
+// https://codeforces.com/blog/entry/77298
 
 import { MinHeap } from "../../util/list/minHeap.js";
 import { sum } from "../../util/misc/index.js";
@@ -16,7 +17,7 @@ export function nonDecreasing(arr: number[]): number {
     heap.pop();
   });
 
-  return sum(arr) - sum(heap.snapshot);
+  return sum(arr) - sum(heap.snapshot());
 }
 
 function mergeSort(arr1: number[], arr2: number[]): number[] {

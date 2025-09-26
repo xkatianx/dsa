@@ -11,6 +11,10 @@ export class MinHeap<T> {
     return this.heap.at(1);
   }
 
+  snapshot() {
+    return this.heap.slice();
+  }
+
   push(x: T) {
     let curr = this.heap.length;
     this.heap.push(x);
